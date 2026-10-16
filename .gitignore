@@ -1,0 +1,63 @@
+# Environment variables and secrets
+
+.env
+.env.*
+!.env.example
+
+# Python
+
+**pycache**/
+*.py[cod]
+.venv/
+venv/
+
+# IDE
+
+.vscode/
+.idea/
+
+# Operating system
+
+.DS_Store
+Thumbs.db
+
+# Logs
+
+*.log
+backups/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Database backups and local data
+backups/
+
+# Private keys
+*.pem
+
+# Environment variables and credentials
+.env
+.env.*
+
+# Database backups and local data
+backups/
+
+# SSH private keys
+*.pem
+
+# Python generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node.js dependencies
+node_modules/
+
+# Local MySQL volume backups
+/mysql-volume-backup.tar.gz
+
+# Local database exports
+/backups/

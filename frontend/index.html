@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Student Management System dashboard">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">S</div>
+                <div>
+                    <h2>StudentHub</h2>
+                    <p>Management Portal</p>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <a href="#" class="nav-item active">
+                    <span>▦</span> Dashboard
+                </a>
+                <a href="#students-section" class="nav-item">
+                    <span>♙</span> Students
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-dot"></div>
+                <span>Student API</span>
+                <span id="api-status" class="api-status">Checking...</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">OVERVIEW</p>
+                    <h1>Student Dashboard</h1>
+                    <p class="subtitle">Manage student records from one place.</p>
+                </div>
+
+                <button class="button button-primary" id="open-add-modal">
+                    <span>＋</span> Add Student
+                </button>
+            </header>
+
+            <section class="welcome-banner">
+                <div>
+                    <p class="banner-label">STUDENT MANAGEMENT SYSTEM</p>
+                    <h2>Welcome to StudentHub</h2>
+                    <p>Keep student information organized and up to date.</p>
+                </div>
+                <div class="banner-icon" aria-hidden="true">🎓</div>
+            </section>
+
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-icon students-icon">♙</div>
+                    <div>
+                        <p class="stat-label">Total Students</p>
+                        <h2 id="total-students">—</h2>
+                        <p class="stat-note">Registered records</p>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon courses-icon">▤</div>
+                    <div>
+                        <p class="stat-label">Available Courses</p>
+                        <h2 id="total-courses">—</h2>
+                        <p class="stat-note">Unique courses</p>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon system-icon">✓</div>
+                    <div>
+                        <p class="stat-label">Backend Status</p>
+                        <h2 id="backend-status">Checking</h2>
+                        <p class="stat-note">Flask REST API</p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="students-panel" id="students-section">
+                <div class="panel-header">
+                    <div>
+                        <h2>Student Records</h2>
+                        <p>View and manage registered students.</p>
+                    </div>
+
+                    <button class="button button-secondary" id="refresh-students">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span aria-hidden="true">⌕</span>
+                        <input
+                            type="search"
+                            id="search-input"
+                            placeholder="Search by name, email or course..."
+                            aria-label="Search students"
+                        >
+                    </div>
+                    <span id="student-count" class="record-count">Loading records...</span>
+                </div>
+
+                <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>STUDENT</th>
+                                <th>EMAIL ADDRESS</th>
+                                <th>COURSE</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body">
+                            <tr>
+                                <td colspan="5" class="empty-state">Loading students...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <span>StudentHub · Student Management System</span>
+                <span>Frontend · Flask API · MySQL · Redis</span>
+            </footer>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="student-modal" hidden>
+        <section
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">STUDENT RECORD</p>
+                    <h2 id="modal-title">Add Student</h2>
+                </div>
+                <button
+                    type="button"
+                    class="close-button"
+                    id="close-modal"
+                    aria-label="Close dialog"
+                >×</button>
+            </div>
+
+            <form id="student-form">
+                <input type="hidden" id="student-id">
+
+                <label for="student-name">Full Name</label>
+                <input
+                    type="text"
+                    id="student-name"
+                    name="name"
+                    maxlength="100"
+                    placeholder="Enter full name"
+                    required
+                >
+
+                <label for="student-email">Email Address</label>
+                <input
+                    type="email"
+                    id="student-email"
+                    name="email"
+                    maxlength="255"
+                    placeholder="student@example.com"
+                    required
+                >
+
+                <label for="student-course">Course</label>
+                <input
+                    type="text"
+                    id="student-course"
+                    name="course"
+                    maxlength="100"
+                    placeholder="e.g. Computer Science"
+                    required
+                >
+
+                <div class="form-actions">
+                    <button type="button" class="button button-secondary" id="cancel-modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="button button-primary" id="save-student">
+                        Save Student
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
